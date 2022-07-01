@@ -4,7 +4,7 @@ const userServices = models.users;
 const constants = require("../../utilities/constants");
 const httpStatus = require("http-status");
 const emailService = require("../../utilities/email");
-
+const emailTemplate = require("../../utilities/emailTemplate");
 //get api for user getting its profile info
 router.get("/users", async (req, res) => {
   try {
@@ -50,16 +50,8 @@ router.post("/users", async (req, res) => {
       message: constants.SUCCCESS_MSG,
       data: user,
     });
-    let mailObject = {
-      subject: "Welcome to Deepak Store",
-      text: `Hi ${user.firstName} ${user.lastName} 
-             You have been registred successfully to deepak Store, PLease 
-             Browse through the products and keep shopping.
-             Thanks and Regards
-             Deepak Jha`,
-      emailTo: user.emailId,
-    };
-    emailService.sendEmail(mailObject);
+    let mailObject = emailTemplate.emailObjectCreation(finalObject, "");
+    emailService.sendEmail(mailObject, "SignUp Mail");
   } catch (exception) {
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,

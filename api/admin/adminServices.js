@@ -4,6 +4,7 @@ const userServices = models.users;
 const constants = require("../../utilities/constants");
 const httpStatus = require("http-status");
 const emailService = require("../../utilities/email");
+const emailTemplate = require("../../utilities/emailTemplate");
 
 //get api for admin for getting all users informaitons
 router.get("/users", async (req, res) => {
@@ -72,15 +73,10 @@ router.put("/removeUser", async (req, res) => {
       message: "request successfull",
       data: result.value,
     });
-    let mailObject = {
-      subject: `Profile  Removed ${updateUserObj.userName}`,
-      text: `Hey ${updateUserObj.firstName} ${updateUserObj.lastName}
-             Your Profile has been removed effictively from ${new Date()},
-             To continue using our site please contact admin on the mail
-             Thanks 
-             DeepaK Store`,
-      emailTo: result.value.emailId,
-    };
+    let mailObject = emailTemplate.emailObjectCreation(
+      updateUserObj,
+      "User Block Mail"
+    );
     emailService.sendEmail(mailObject);
   } catch (exception) {
     console.log(exception);
