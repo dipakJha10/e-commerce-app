@@ -11,7 +11,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get("/", function (req, res) {
-  res.send("hi there");
+  res.send({
+    status: "ON",
+    message: "Services are up an running!!",
+  });
 });
 
 app.use("/api/userServices", userservices);
