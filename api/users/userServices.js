@@ -41,16 +41,25 @@ router.get("/users", async (req, res) => {
 
 //post api for posting user info in database
 router.post("/users", async (req, res) => {
-  req.body.isActive = true;
-  let newUser = new userServices(req.body);
   try {
+    req.body.isActive = true;
+    let newUser = new userServices(req.body);
     const user = await newUser.save();
     res.status(200).json({
       status: httpStatus.OK,
       message: constants.SUCCCESS_MSG,
       data: user,
     });
-    emailService.sendEmail(req.body);
+    let mailObject = {
+      subject: "Welcome to Deepak Store",
+      text: `Hi ${user.firstName} ${user.lastName} 
+             You have been registred successfully to deepak Store, PLease 
+             Browse through the products and keep shopping.
+             Thanks and Regards
+             Deepak Jha`,
+      emailTo: user.emailId,
+    };
+    emailService.sendEmail(mailObject);
   } catch (exception) {
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,

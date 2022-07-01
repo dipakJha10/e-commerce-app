@@ -11,8 +11,8 @@ var transporter = nodemailer.createTransport({
 const sendEmail = (reqObj) => {
   var mailOptions = {
     from: "dipakjha.16b@gmail.com",
-    subject: "Welcome to deepak Store",
-    text: `Hi ${reqObj.firstName}${reqObj.lastName},`,
+    subject: reqObj.subject,
+    text: reqObj.text,
     to: reqObj.emailTo,
   };
 
@@ -24,6 +24,10 @@ const sendEmail = (reqObj) => {
     }
   });
 };
+
+
+
+
 
 module.exports = {
   sendEmail,
