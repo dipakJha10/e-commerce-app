@@ -20,6 +20,6 @@ app.get("/", function (req, res) {
 app.use("/api/userServices", userservices);
 app.use("/api/adminServices", adminservices);
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log("server is up at 3000");
 });
