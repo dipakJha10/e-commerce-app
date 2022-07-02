@@ -30,13 +30,3 @@ let emailObjectCreation = (user, notificationType) => {
 module.exports = {
   emailObjectCreation,
 };
-
-// let mailObject = {
-//   subject: "Welcome to Deepak Store",
-//   text: `Hi ${user.firstName} ${user.lastName}
-//            You have been registred successfully to deepak Store, PLease
-//            Browse through the products and keep shopping.
-//            Thanks and Regards
-//            Deepak Jha`,
-//   emailTo: user.emailId,
-// };

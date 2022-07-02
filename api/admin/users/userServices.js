@@ -1,10 +1,10 @@
 const router = require("express").Router();
-const models = require("../../models/models");
+const models = require("../../../models/models");
 const userServices = models.users;
-const constants = require("../../utilities/constants");
+const constants = require("../../../utilities/constants");
 const httpStatus = require("http-status");
-const emailService = require("../../utilities/email");
-const emailTemplate = require("../../utilities/emailTemplate");
+const emailService = require("../../../utilities/email");
+const emailTemplate = require("../../../utilities/emailTemplate");
 
 //get api for admin for getting all users informaitons
 router.get("/users", async (req, res) => {

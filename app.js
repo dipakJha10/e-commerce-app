@@ -1,10 +1,11 @@
 const express = require("express");
 const app = express();
 const db = require("./db/db.js");
-const userservices = require("./api/users/userServices");
+const userservices = require("./api/users/user/userServices");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
-const adminservices = require("./api/admin/adminServices");
+const adminservices = require("./api/admin/users/userServices");
+const categories = require("./api/admin/category/category");
 
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -19,6 +20,7 @@ app.get("/", function (req, res) {
 
 app.use("/api/userServices", userservices);
 app.use("/api/adminServices", adminservices);
+app.use("/api/category", categories);
 
 app.listen(process.env.PORT || 3000, () => {
   console.log("server is up at 3000");
