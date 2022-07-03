@@ -28,14 +28,31 @@ router.post("/newCategories", async (req, res) => {
 
 router.get("/allCategories", async (req, res) => {
   try {
-    const category = await categories.find({});
+    let result;
+    if (req.query.categoryId) {
+      result = await categories.find({ categoryId: req.query.categoryId });
+    } else {
+      let offset;
+      let limit;
+      if (req.query.pageNo && req.query.perPage) {
+        req.query.perPage = parseInt(req.query.perPage);
+        req.query.pageNo = parseInt(req.query.pageNo);
+        offset = req.query.perPage * (req.query.pageNo - 1);
+        limit = req.query.perPage;
+      } else {
+        offset = 0;
+        limit = 40;
+      }
+      result = await categories.find({}).skip(offset).limit(limit);
+    }
     res.status(200).json({
       status: httpStatus.OK,
       message: constants.SUCCCESS_MSG,
-      data: category,
-      count: category.length,
+      data: result,
+      count: result.length,
     });
   } catch (exception) {
+    console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
       message: constants.FAILURE_MSG,
