@@ -25,6 +25,56 @@ router.post("/addProducts", async (req, res) => {
 
 // update products
 
-router.put("/")
+router.put("/updateProducts", async (req, res) => {
+  try {
+    const result = await productServices.findOneAndUpdate(
+      {
+        productId: req.body.productId,
+      },
+      req.body,
+      {
+        new: true,
+        upsert: true,
+        rawResult: true,
+      }
+    );
+    res.status(200).json({
+      status: httpStatus.OK,
+      message: "request successfull",
+      data: result.value,
+    });
+  } catch (exception) {
+    res.status(500).send({
+      status: httpStatus.INTERNAL_SERVER_ERROR,
+      message: "request Failed",
+      data: null,
+    });
+  }
+});
+
+// delete products api
+
+router.delete("/delProduct", async (req, res) => {
+  try {
+    const delProduct = await productServices.findOneAndRemove({
+      productId: req.body.productId,
+    });
+    res.status(200).json({
+      status: httpStatus.OK,
+      message: "request successfull",
+      data: null,
+    });
+  } catch (exception) {
+    res.status(500).send({
+      status: httpStatus.INTERNAL_SERVER_ERROR,
+      message: "request Failed",
+      data: null,
+    });
+  }
+});
+
+
+
+
 
 module.exports = router;
