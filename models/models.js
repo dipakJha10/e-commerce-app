@@ -57,14 +57,6 @@ const productsModel = new mongoose.Schema({
   productDescription: {
     type: String,
   },
-  venderId: {
-    type: String,
-    required: true,
-  },
-  supplierId: {
-    type: String,
-    required: true,
-  },
   categoryId: {
     type: String,
     required: true,
