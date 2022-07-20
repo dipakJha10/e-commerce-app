@@ -110,24 +110,90 @@ const productCategoryModel = new mongoose.Schema({
   categoryId: {
     type: String,
     required: true,
-    unique:true,
+    unique: true,
   },
   categoryName: {
     type: String,
-    required:true,
+    required: true,
   },
   categoryDescription: {
     type: String,
   },
   active: {
-    type:Boolean,
-  }
-})
+    type: Boolean,
+  },
+});
 
+// product order model
+const orderPoductModel = new mongoose.Schema({
+  orderId: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  userName: {
+    type: String,
+    required: true,
+  },
+  emailId: {
+    type: String,
+    required: true,
+  },
+  productId: {
+    type: String,
+    required: true,
+  },
+  orderNumber: {
+    type: Number,
+    required: true,
+    unique: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  quantity: {
+    type: Number,
+    required: true,
+  },
+  discount: {
+    type: Number,
+    required: true,
+  },
+  size: {
+    type: String,
+  },
+  color: {
+    type: String,
+  },
+  fulfilled: {
+    type: Boolean,
+    required: true,
+  },
+  shipDate: {
+    type: String,
+    required: true,
+  },
+  billDate: {
+    type: String,
+    required: true,
+  },
+  isActive: {
+    type: Boolean,
+  },
+  isCanceled: {
+    type: Boolean,
+    default: false,
+  },
+});
 
 const users = mongoose.model("users", userModel);
 const products = mongoose.model("products", productsModel);
 const category = mongoose.model("category", productCategoryModel);
+const order = mongoose.model("order", orderPoductModel);
 module.exports = {
-  users, products,category
+  users,
+  products,
+  category,
+  order,
 };
