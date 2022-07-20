@@ -8,6 +8,9 @@ const adminservices = require("./api/admin/users/userServices");
 const categories = require("./api/admin/category/category");
 const productservices = require("./api/admin/products/products");
 const userProductServices = require("./api/users/products/products");
+const productOrders = require("./api/users/order/order");
+const productOrdersAdmin = require("./api/admin/orders/orders");
+
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -24,7 +27,8 @@ app.use("/api/adminServices", adminservices);
 app.use("/api/category", categories);
 app.use("/api/products/", productservices);
 app.use("/api/products/", userProductServices);
-
+app.use("/api/orders", productOrders);
+app.use("/api/orders", productOrdersAdmin);
 app.listen(process.env.PORT || 3000, () => {
   console.log("server is up at 3000");
 });

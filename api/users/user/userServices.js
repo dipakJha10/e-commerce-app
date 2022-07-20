@@ -6,7 +6,6 @@ const httpStatus = require("http-status");
 const emailService = require("../../../utilities/email");
 const emailTemplate = require("../../../utilities/emailTemplate");
 
-
 //get api for user getting its profile info
 router.get("/users", async (req, res) => {
   try {
@@ -42,7 +41,7 @@ router.get("/users", async (req, res) => {
 });
 
 //post api for posting user info in database
-router.post("/users", async (req, res) => {
+router.post("/addUsers", async (req, res) => {
   try {
     req.body.isActive = true;
     let newUser = new userServices(req.body);
@@ -53,7 +52,7 @@ router.post("/users", async (req, res) => {
       data: user,
     });
     let mailObject = emailTemplate.emailObjectCreation(finalObject, "");
-    emailService.sendEmail(mailObject, "SignUp Mail");
+    emailService.sendEmail(newUser, "SignUp Mail");
   } catch (exception) {
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
