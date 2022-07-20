@@ -72,6 +72,7 @@ router.put("/cancelOrder", async (req, res) => {
     const updateCancelOrder = cancelOrder[0];
 
     updateCancelOrder.isCanceled = true;
+    updateOrderStatus.isActive = false;
 
     let result = await productOrders.findOneAndUpdate(
       { orderId: req.body.orderId },

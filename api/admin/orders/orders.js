@@ -3,6 +3,10 @@ const models = require("../../../models/models");
 const productOrders = models.order;
 const constants = require("../../../utilities/constants");
 const httpStatus = require("http-status");
+const { sendEmail } = require("../../../utilities/email");
+const userServices = models.users;
+const emailService = require("../../../utilities/email");
+const emailTemplate = require("../../../utilities/emailTemplate");
 
 //view orders
 router.get("/viewOrders", async (req, res) => {
@@ -48,18 +52,43 @@ router.get("/viewOrders", async (req, res) => {
 router.put("/cancelOrderAdmin", async (req, res) => {
   try {
     const adminCancelOrder = await productOrders.find({
-      userName: req.body.userName,
+      orderId: req.body.orderId,
     });
 
     const updateOrderStatus = adminCancelOrder[0];
 
+    updateOrderStatus.isCanceled = true;
     updateOrderStatus.isActive = false;
+
+    let result = await productOrders.findOneAndUpdate(
+      { orderId: req.body.orderId },
+      updateOrderStatus,
+      {
+        new: true,
+        upsert: true,
+        rawResult: true, // Return the raw result from the MongoDB driver
+      }
+    );
 
     res.status(200).json({
       status: httpStatus.OK,
       message: "request successfull ! order has been canceled",
-      data: adminCancelOrder,
+      data: updateOrderStatus,
     });
+
+    //mail notification code
+
+    const userInfo = await userServices.findOne({
+      userName: updateOrderStatus.userName,
+    });
+
+    const user = { ...userInfo._doc, ...updateOrderStatus._doc };
+    console.log(user, "===========================================");
+    let emailContent = emailTemplate.emailObjectCreation(
+      user,
+      "cancel Order by User by admin"
+    );
+    emailService.sendEmail(emailContent);
   } catch (exception) {
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,

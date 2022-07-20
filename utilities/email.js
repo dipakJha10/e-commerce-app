@@ -25,10 +25,6 @@ const sendEmail = (reqObj) => {
   });
 };
 
-
-
-
-
 module.exports = {
   sendEmail,
 };
