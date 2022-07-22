@@ -187,13 +187,35 @@ const orderPoductModel = new mongoose.Schema({
   },
 });
 
+// coupen code model
+
+const couponCodeModel = new mongoose.Schema({
+  couponCode: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  isActive: {
+    type: Boolean,
+  },
+  isUsed: {
+    type: Boolean,
+  },
+  discountPercentage: {
+    type: Number,
+  },
+});
+
 const users = mongoose.model("users", userModel);
 const products = mongoose.model("products", productsModel);
 const category = mongoose.model("category", productCategoryModel);
 const order = mongoose.model("order", orderPoductModel);
+const coupon = mongoose.model("coupon", couponCodeModel);
+
 module.exports = {
   users,
   products,
   category,
   order,
+  coupon,
 };

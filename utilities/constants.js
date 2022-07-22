@@ -1,3 +1,5 @@
+var randomstring = require("randomstring");
+
 const constants = {
   SUCCCESS_MSG: "Request Successfull..!!",
   FORBIDDEN_MSG: "Not Authorized..!!",
@@ -7,4 +9,19 @@ const constants = {
   USER_NOT_EXISTS: "User does not exist..!!",
 };
 
-module.exports = constants;
+const couponCodeGeneration = () => {
+  let code=randomstring.generate({
+    length: 6,
+    charset: 'alphanumeric',
+    capitalization :"uppercase"
+  });
+
+  return code;
+}
+
+module.exports = {
+  constants,
+  couponCodeGeneration,
+};
+
+
