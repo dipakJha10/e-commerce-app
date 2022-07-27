@@ -187,7 +187,7 @@ const orderPoductModel = new mongoose.Schema({
   },
 });
 
-// coupen code model
+// coupon code model
 
 const couponCodeModel = new mongoose.Schema({
   couponCode: {
