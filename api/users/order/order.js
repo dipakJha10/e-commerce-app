@@ -141,6 +141,10 @@ router.get("/orderNumbers", async (req, res) => {
 // top selling products
 router.get("/topProducts", async (req, res) => {
   try {
+    let limit = 5;
+    if (req.query.top) {
+      limit = parseInt(req.query.top);
+    }
     // const products = await productOrders.find({}).where({});
     const products = await productOrders.aggregate(
       [
@@ -159,6 +163,7 @@ router.get("/topProducts", async (req, res) => {
         {
           $sort: { count: -1 },
         },
+        { $limit: limit },
       ],
       function (err, results) {
         // Do something with the results

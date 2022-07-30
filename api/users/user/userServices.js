@@ -5,6 +5,7 @@ const constants = require("../../../utilities/constants");
 const httpStatus = require("http-status");
 const emailService = require("../../../utilities/email");
 const emailTemplate = require("../../../utilities/emailTemplate");
+const cart = require("../../../utilities/userSignUpServices");
 
 //get api for user getting its profile info
 router.get("/users", async (req, res) => {
@@ -51,9 +52,15 @@ router.post("/addUsers", async (req, res) => {
       message: constants.SUCCCESS_MSG,
       data: user,
     });
-    let mailObject = emailTemplate.emailObjectCreation(finalObject, "");
-    emailService.sendEmail(newUser, "SignUp Mail");
-  } catch (exception) {
+    // let mailObject = emailTemplate.emailObjectCreation(user, "");
+    // emailService.sendEmail(newUser, "SignUp Mail");
+
+    const addCart = await cart.createCart(req.body.userName);
+    console.log(addCart);
+    const productWishlist = await cart.addWishlist(req.body.userName);
+    console.log(productWishlist);
+  } catch (exception) {``
+    console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
       message: constants.FAILURE_MSG,

@@ -206,16 +206,55 @@ const couponCodeModel = new mongoose.Schema({
   },
 });
 
+// cart products models
+
+const cartModel = new mongoose.Schema({
+  userName: {
+    type: String,
+    required: true,
+  },
+  cartProduct: [
+    {
+      productId: String,
+      quantity: Number,
+      productName: String,
+      price: Number,
+    },
+  ],
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
+});
+
+// whishlist products models
+const wishListModel = new mongoose.Schema({
+  userName: {
+    type: String,
+    require: true,
+  },
+  productList: [
+    {
+      productId: String,
+      productName: String,
+      price: Number,
+    },
+  ],
+});
+
 const users = mongoose.model("users", userModel);
 const products = mongoose.model("products", productsModel);
 const category = mongoose.model("category", productCategoryModel);
 const order = mongoose.model("order", orderPoductModel);
 const coupon = mongoose.model("coupon", couponCodeModel);
-
+const cart = mongoose.model("cart", cartModel);
+const wishlist = mongoose.model("wishlist", wishListModel);
 module.exports = {
   users,
   products,
   category,
   order,
   coupon,
+  cart,
+  wishlist,
 };

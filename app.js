@@ -12,6 +12,7 @@ const productOrders = require("./api/users/order/order");
 const productOrdersAdmin = require("./api/admin/orders/orders");
 const couponCode = require("./api/admin/coupon/codeGeneration");
 const userCoupon = require("./api/users/coupons/coupon");
+const cart = require("./api/users/cart/cart");
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -32,6 +33,7 @@ app.use("/api/orders", productOrders);
 app.use("/api/orders", productOrdersAdmin);
 app.use("/api/coupon", couponCode);
 app.use("/api/coupons", userCoupon);
+app.use("/api/cart", cart);
 app.listen(process.env.PORT || 3000, () => {
   console.log("server is up at 3000");
 });
