@@ -10,18 +10,16 @@ const constants = {
 };
 
 const couponCodeGeneration = () => {
-  let code=randomstring.generate({
+  let code = randomstring.generate({
     length: 6,
-    charset: 'alphanumeric',
-    capitalization :"uppercase"
+    charset: "alphanumeric",
+    capitalization: "uppercase",
   });
 
   return code;
-}
+};
 
 module.exports = {
   constants,
   couponCodeGeneration,
 };
-
-

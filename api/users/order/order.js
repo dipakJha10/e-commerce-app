@@ -89,9 +89,7 @@ router.put("/cancelOrder", async (req, res) => {
       message: "request successfull",
       data: updateCancelOrder,
     });
-
     //notification code
-
     const userInfo = await userServices.findOne({
       userName: updateCancelOrder.userName,
     });
@@ -110,6 +108,82 @@ router.put("/cancelOrder", async (req, res) => {
         data: "order can't canceled",
         exception: exception,
       });
+  }
+});
+
+// most ordered product
+
+router.get("/orderNumbers", async (req, res) => {
+  try {
+    const productOrdersObj = await productOrders.find({
+      productId: req.body.productId,
+    });
+    const result = await productOrders
+      .find({ productId: req.body.productId })
+      .count();
+    console.log(result);
+    res.status(200).json({
+      status: httpStatus.OK,
+      message: "request successfull",
+      count: result,
+    });
+  } catch (exception) {
+    console.log(exception);
+    res.status(500).send({
+      status: httpStatus.INTERNAL_SERVER_ERROR,
+      message: constants.FAILURE_MSG,
+      data: "number of order can't be fetched",
+      exception: exception,
+    });
+  }
+});
+
+// top selling products
+router.get("/topProducts", async (req, res) => {
+  try {
+    let limit = 5;
+    if (req.query.top) {
+      limit = parseInt(req.query.top);
+    }
+    // const products = await productOrders.find({}).where({});
+    const products = await productOrders.aggregate(
+      [
+        // {
+        //   $match: {
+        //     productId: { $in: ["BAGS999"] },
+        //   },
+        // },
+        {
+          $group: {
+            _id: "$productId",
+            count: { $sum: 1 },
+            totalPrice: { $sum: "$price" },
+          },
+        },
+        {
+          $sort: { count: -1 },
+        },
+        { $limit: limit },
+      ],
+      function (err, results) {
+        // Do something with the results
+      }
+    );
+
+    console.log(products);
+    res.status(200).json({
+      status: httpStatus.OK,
+      message: "request successfull",
+      data: products,
+    });
+  } catch (exception) {
+    console.log(exception);
+    res.status(500).send({
+      status: httpStatus.INTERNAL_SERVER_ERROR,
+      message: constants.FAILURE_MSG,
+      data: "topProducts can't be fetched",
+      exception: exception,
+    });
   }
 });
 
