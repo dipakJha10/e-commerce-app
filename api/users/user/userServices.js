@@ -52,13 +52,12 @@ router.post("/addUsers", async (req, res) => {
       message: constants.SUCCCESS_MSG,
       data: user,
     });
-    // let mailObject = emailTemplate.emailObjectCreation(user, "");
-    // emailService.sendEmail(newUser, "SignUp Mail");
+    let mailObject = emailTemplate.emailObjectCreation(user, "SignUp Mail");
+    emailService.sendEmail(mailObject);
 
     const addCart = await cart.createCart(req.body.userName);
-    console.log(addCart);
     const productWishlist = await cart.addWishlist(req.body.userName);
-    console.log(productWishlist);
+    const contactList = await cart.SaveContactDetails(req.body);
   } catch (exception) {``
     console.log(exception);
     res.status(500).send({
