@@ -27,6 +27,7 @@ router.get("/users", async (req, res) => {
         }
       );
     }
+
     res.status(200).json({
       status: httpStatus.OK,
       message: constants.SUCCCESS_MSG,
@@ -58,7 +59,7 @@ router.post("/addUsers", async (req, res) => {
     const addCart = await cart.createCart(req.body.userName);
     const productWishlist = await cart.addWishlist(req.body.userName);
     const contactList = await cart.SaveContactDetails(req.body);
-  } catch (exception) {``
+  } catch (exception) {
     console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
