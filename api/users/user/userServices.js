@@ -27,6 +27,7 @@ router.get("/users", async (req, res) => {
         }
       );
     }
+
     res.status(200).json({
       status: httpStatus.OK,
       message: constants.SUCCCESS_MSG,
@@ -52,14 +53,13 @@ router.post("/addUsers", async (req, res) => {
       message: constants.SUCCCESS_MSG,
       data: user,
     });
-    // let mailObject = emailTemplate.emailObjectCreation(user, "");
-    // emailService.sendEmail(newUser, "SignUp Mail");
+    let mailObject = emailTemplate.emailObjectCreation(user, "SignUp Mail");
+    emailService.sendEmail(mailObject);
 
     const addCart = await cart.createCart(req.body.userName);
-    console.log(addCart);
     const productWishlist = await cart.addWishlist(req.body.userName);
-    console.log(productWishlist);
-  } catch (exception) {``
+    const contactList = await cart.SaveContactDetails(req.body);
+  } catch (exception) {
     console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,

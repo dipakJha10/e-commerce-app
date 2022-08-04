@@ -108,4 +108,125 @@ router.post("/addProductToCart", async (req, res) => {
   }
 });
 
+// update product from cart
+
+router.put("/updateCart", async (req, res) => {
+  try {
+    const findUser = await cartService.findOne({ userName: req.body.userName });
+    if (findUser.cartProduct.length > 0) {
+      let index = findUser.cartProduct.findIndex(
+        (product) => product.productId === req.body.productId
+      );
+      if (index >= 0) {
+        if (req.body.action === "dec") {
+          if (findUser.cartProduct[index].quantity === 1) {
+            findUser.cartProduct.splice(index, 1);
+          } else {
+            findUser.cartProduct[index].quantity =
+              findUser.cartProduct[index].quantity - 1;
+          }
+        } else {
+          findUser.cartProduct[index].quantity =
+            findUser.cartProduct[index].quantity + 1;
+        }
+      }
+    }
+    console.log("after operations", findUser);
+    let result = await cartService.findOneAndUpdate(
+      { userName: req.body.userName },
+      findUser,
+      {
+        new: true,
+        upsert: true,
+        rawResult: true, // Return the raw result from the MongoDB driver
+      }
+    );
+    res.status(200).json({
+      status: httpStatus.OK,
+      message: constants.SUCCCESS_MSG,
+      data: findUser,
+    });
+  } catch (exception) {
+    console.log(exception);
+    res.status(500).send({
+      status: httpStatus.INTERNAL_SERVER_ERROR,
+      message: constants.FAILURE_MSG,
+      data: "",
+      exception: exception,
+    });
+  }
+});
+
+// delete product from cart
+router.delete("/delete", async (req, res) => {
+  try {
+    const user = await cartService.findOne({ userName: req.body.userName });
+    
+      let index = user.cartProduct.findIndex(
+        (product) => product.productId === req.body.productId
+      );
+      if (index >= 0) {
+        user.cartProduct.splice(index, 1);
+      }
+    
+
+    // let result = await cartService.findOneAndUpdate(
+    //   { userName: req.body.userName },
+    //   user,
+    //   {
+    //     new: true,
+    //     upsert: true,
+    //     rawResult: true, // Return the raw result from the MongoDB driver
+    //   }
+    // );
+    res.status(200).json({
+      status: httpStatus.OK,
+      message: constants.SUCCCESS_MSG,
+      data: user,
+    });
+  } catch (exception) {
+    console.log(exception);
+    res.status(500).send({
+      status: httpStatus.INTERNAL_SERVER_ERROR,
+      message: constants.FAILURE_MSG,
+      data: "",
+      exception: exception,
+    });
+  }
+});
+
+// delete products
+
+router.delete("/deleteCart", async (req, res) => {
+  try {
+    const user = await cartService.findOne({ userName: req.body.userName });
+    let product = req.body.productId;   
+    if (product) {
+      user.cartProduct.splice(product,1);
+    }
+    let result = await cartService.findOneAndUpdate(
+      { userName: req.body.userName },
+      user,
+      {
+        new: true,
+        upsert: true,
+        rawResult: true, // Return the raw result from the MongoDB driver
+      }
+    );
+    res.status(200).json({
+      status: httpStatus.OK,
+      message: constants.SUCCCESS_MSG,
+      data: user,
+    });
+  } catch (exception) {
+    console.log(exception);
+    res.status(500).send({
+      status: httpStatus.INTERNAL_SERVER_ERROR,
+      message: constants.FAILURE_MSG,
+      data: "",
+      exception: exception,
+    });
+  }
+});
+
 module.exports = router;
