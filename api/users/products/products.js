@@ -3,13 +3,8 @@ const models = require("../../../models/models");
 const userProductServices = models.products;
 const constants = require("../../../utilities/constants");
 const httpStatus = require("http-status");
-const redis = require("redis");
-const { response } = require("express");
 
-const REDIS_PORT = process.env.PORT || 6379;
-
-const client = redis.createClient(REDIS_PORT);
-client.connect();
+const { response } = require("express");  
 //browse products
 router.get("/browseProducts", async (req, res, next) => {
   try {
@@ -19,26 +14,18 @@ router.get("/browseProducts", async (req, res, next) => {
         productId: req.query.productId,
       });
     } else {
-      let redisRespone = await client.get("products");
-      if (redisRespone !== null) {
-        console.log("response from resis is  coming==========================");
-        result = JSON.parse(redisRespone);
+      let offset;
+      let limit;
+      if (req.query.pageNo && req.query.perPage) {
+        req.query.perPage = parseInt(req.query.perPage);
+        req.query.pageNo = parseInt(req.query.pageNo);
+        offset = req.query.perPage * (req.query.pageNo - 1);
+        limit = req.query.perPage;
       } else {
-        let offset;
-        let limit;
-        if (req.query.pageNo && req.query.perPage) {
-          req.query.perPage = parseInt(req.query.perPage);
-          req.query.pageNo = parseInt(req.query.pageNo);
-          offset = req.query.perPage * (req.query.pageNo - 1);
-          limit = req.query.perPage;
-        } else {
-          offset = 0;
-          limit = 2;
-        }
-        result = await userProductServices.find({}).skip(offset).limit(limit);
-        client.set("products", JSON.stringify(result));
-        console.log("saving response to resis ==========================");
+        offset = 0;
+        limit = 2;
       }
+      result = await userProductServices.find({}).skip(offset).limit(limit);
     }
     res.status(200).json({
       status: httpStatus.OK,
