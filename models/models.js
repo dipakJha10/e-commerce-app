@@ -276,6 +276,18 @@ const referralCodeModel = new mongoose.Schema({
   },
 });
 
+const authModel = new mongoose.Schema({
+  userName: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true
+  },
+});
+
 const users = mongoose.model("users", userModel);
 const products = mongoose.model("products", productsModel);
 const category = mongoose.model("category", productCategoryModel);
@@ -285,6 +297,8 @@ const cart = mongoose.model("cart", cartModel);
 const wishlist = mongoose.model("wishlist", wishListModel);
 const contactDetail = mongoose.model("contactDetail", userContactModel);
 const referralCode = mongoose.model("referralCode", referralCodeModel);
+const auth = mongoose.model("auth", authModel);
+
 module.exports = {
   users,
   products,
@@ -295,4 +309,5 @@ module.exports = {
   wishlist,
   contactDetail,
   referralCode,
+  auth
 };

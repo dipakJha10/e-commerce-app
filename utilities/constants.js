@@ -7,6 +7,7 @@ const constants = {
   AUTHORIZATION_SUCCESS_MESSAGE: "Login successFull..!!",
   PASSWORD_MISMATCH: "Username password does Not macth..!!",
   USER_NOT_EXISTS: "User does not exist..!!",
+
 };
 
 const couponCodeGeneration = () => {
@@ -19,7 +20,15 @@ const couponCodeGeneration = () => {
   return code;
 };
 
+
+const authConstants={
+  secret_key:"1234567890",
+  expires_in:"1h"
+}
+
+
 module.exports = {
   constants,
   couponCodeGeneration,
+  authConstants
 };

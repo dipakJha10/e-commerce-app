@@ -15,6 +15,7 @@ const userCoupon = require("./api/users/coupons/coupon");
 const cart = require("./api/users/cart/cart");
 const productWishlist = require("./api/users/wishlist/wishlist");
 const referral = require("./api/users/referral/refralCode");
+const authService=require("./utilities/authServices")
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -27,6 +28,12 @@ app.get("/", function (req, res) {
 });
 
 app.use("/api/userServices", userservices);
+
+//added middleware auth
+app.use(authService.verifyToken, function (req, res, next) {
+  authService.tokenValidation(req, res, next)
+
+});
 app.use("/api/adminServices", adminservices);
 app.use("/api/category", categories);
 app.use("/api/products/", productservices);
