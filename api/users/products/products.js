@@ -4,7 +4,7 @@ const userProductServices = models.products;
 const constants = require("../../../utilities/constants");
 const httpStatus = require("http-status");
 
-const { response } = require("express");  
+const { response } = require("express");
 //browse products
 router.get("/browseProducts", async (req, res, next) => {
   try {
@@ -29,7 +29,7 @@ router.get("/browseProducts", async (req, res, next) => {
     }
     res.status(200).json({
       status: httpStatus.OK,
-      message: constants.SUCCCESS_MSG,
+      message: constants.constants.SUCCCESS_MSG,
       data: result,
       count: result.length,
     });
@@ -37,7 +37,7 @@ router.get("/browseProducts", async (req, res, next) => {
     console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: "products can not be accessed",
     });
   }

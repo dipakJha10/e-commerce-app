@@ -37,14 +37,14 @@ router.post("/wishlistAdd", async (req, res) => {
     );
     res.status(200).json({
       status: httpStatus.OK,
-      message: constants.SUCCCESS_MSG,
+      message: constants.constants.SUCCCESS_MSG,
       data: findUser,
     });
   } catch (exception) {
     console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: "Products can't be added to cart",
       exception: exception,
     });
@@ -60,13 +60,13 @@ router.get("/wishlist", async (req, res) => {
     });
     res.status(200).json({
       status: httpStatus.OK,
-      message: constants.SUCCCESS_MSG,
+      message: constants.constants.SUCCCESS_MSG,
       data: wishlist,
     });
   } catch (exception) {
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: "Products can't be added to cart",
       exception: exception,
     });
@@ -98,14 +98,14 @@ router.delete("/delete", async (req, res) => {
     );
     res.status(200).json({
       status: httpStatus.OK,
-      message: constants.SUCCCESS_MSG,
+      message: constants.constants.SUCCCESS_MSG,
       data: wishlist,
     });
   } catch (exception) {
     console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: "Products can't be deleted",
       exception: exception,
     });
@@ -130,14 +130,14 @@ router.delete("/deleteAll", async (req, res) => {
     );
     res.status(200).json({
       status: httpStatus.OK,
-      message: constants.SUCCCESS_MSG,
+      message: constants.constants.SUCCCESS_MSG,
       data: wishlist,
     });
   } catch (exception) {
     console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: "Products can't be deleted",
       exception: exception,
     });
