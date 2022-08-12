@@ -329,6 +329,6 @@ module.exports = {
   wishlist,
   contactDetail,
   referralCode,
-  wallet
-  auth
+  wallet,
+  auth,
 };
