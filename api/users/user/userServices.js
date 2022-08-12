@@ -6,6 +6,9 @@ const httpStatus = require("http-status");
 const emailService = require("../../../utilities/email");
 const emailTemplate = require("../../../utilities/emailTemplate");
 const cart = require("../../../utilities/userSignUpServices");
+const authDbServices = models.auth;
+const bcrypt = require("bcrypt");
+const authService = require('../../../utilities/authServices')
 
 //get api for user getting its profile info
 router.get("/users", async (req, res) => {
@@ -34,33 +37,6 @@ router.get("/users", async (req, res) => {
       data: user[0],
     });
   } catch (error) {
-    res.status(500).send({
-      status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
-      data: null,
-    });
-  }
-});
-
-//post api for posting user info in database
-router.post("/addUsers", async (req, res) => {
-  try {
-    req.body.isActive = true;
-    let newUser = new userServices(req.body);
-    const user = await newUser.save();
-    res.status(200).json({
-      status: httpStatus.OK,
-      message: constants.SUCCCESS_MSG,
-      data: user,
-    });
-    let mailObject = emailTemplate.emailObjectCreation(user, "SignUp Mail");
-    emailService.sendEmail(mailObject);
-
-    const addCart = await cart.createCart(req.body.userName);
-    const productWishlist = await cart.addWishlist(req.body.userName);
-    const contactList = await cart.SaveContactDetails(req.body);
-  } catch (exception) {
-    console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
       message: constants.FAILURE_MSG,
@@ -147,10 +123,13 @@ router.get("/userSearch", async (req, res) => {
   } catch (error) {
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: null,
     });
   }
 });
+
+
+
 
 module.exports = router;

@@ -15,11 +15,25 @@ const couponCodeGeneration = () => {
     charset: "alphanumeric",
     capitalization: "uppercase",
   });
-
   return code;
 };
+
+const referralLogics = {
+  coinsReferer: 400,
+  userWithReferral: 200,
+  isValidForSigningUser: true,
+};
+
+
+const authConstants={
+  secret_key:"1234567890",
+  expires_in:"1h"
+}
+
 
 module.exports = {
   constants,
   couponCodeGeneration,
+  referralLogics,
+  authConstants
 };
