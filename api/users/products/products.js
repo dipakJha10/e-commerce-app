@@ -29,7 +29,7 @@ router.get("/browseProducts", async (req, res, next) => {
     }
     res.status(200).json({
       status: httpStatus.OK,
-      message: constants.SUCCCESS_MSG,
+      message: constants.constants.SUCCCESS_MSG,
       data: result,
       count: result.length,
     });
