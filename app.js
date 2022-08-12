@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const db = require("./db/db.js");
 const userservices = require("./api/users/user/userServices");
+const userSignUp = require("./api/users/user/signUpSignIn");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const adminservices = require("./api/admin/users/userServices");
@@ -16,7 +17,7 @@ const cart = require("./api/users/cart/cart");
 const productWishlist = require("./api/users/wishlist/wishlist");
 const referral = require("./api/users/referral/refralCode");
 const wallet = require("./api/users/wallet/wallet");
-const authService=require("./utilities/authServices")
+const authService = require("./utilities/authServices");
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -28,14 +29,13 @@ app.get("/", function (req, res) {
   });
 });
 
-app.use("/api/userServices", userservices);
-
+app.use("/api/userSignUpSignIn", userSignUp);
 //added middleware auth
 app.use(authService.verifyToken, function (req, res, next) {
-  authService.tokenValidation(req, res, next)
-
+  authService.tokenValidation(req, res, next);
 });
 app.use("/api/adminServices", adminservices);
+app.use("/api/userServices", userservices);
 app.use("/api/category", categories);
 app.use("/api/products/", productservices);
 app.use("/api/products/", userProductServices);
