@@ -15,7 +15,6 @@ const couponCodeGeneration = () => {
     charset: "alphanumeric",
     capitalization: "uppercase",
   });
-
   return code;
 };
 
