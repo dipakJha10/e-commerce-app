@@ -276,6 +276,25 @@ const referralCodeModel = new mongoose.Schema({
   },
 });
 
+// wallet code
+const walletModel = new mongoose.Schema({
+  userName: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  transactions: [
+    {
+      coins: Number,
+      action: String,
+      timeStamp: Number,
+    },
+  ],
+  totalBalance: {
+    type: Number,
+  },
+});
+
 const users = mongoose.model("users", userModel);
 const products = mongoose.model("products", productsModel);
 const category = mongoose.model("category", productCategoryModel);
@@ -285,6 +304,7 @@ const cart = mongoose.model("cart", cartModel);
 const wishlist = mongoose.model("wishlist", wishListModel);
 const contactDetail = mongoose.model("contactDetail", userContactModel);
 const referralCode = mongoose.model("referralCode", referralCodeModel);
+const wallet=mongoose.model("wallet", walletModel)
 module.exports = {
   users,
   products,
@@ -295,4 +315,5 @@ module.exports = {
   wishlist,
   contactDetail,
   referralCode,
+  wallet
 };

@@ -15,6 +15,7 @@ const userCoupon = require("./api/users/coupons/coupon");
 const cart = require("./api/users/cart/cart");
 const productWishlist = require("./api/users/wishlist/wishlist");
 const referral = require("./api/users/referral/refralCode");
+const wallet = require("./api/users/wallet/wallet");
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -38,6 +39,7 @@ app.use("/api/coupons", userCoupon);
 app.use("/api/cart", cart);
 app.use("/api/wishlist", productWishlist);
 app.use("/api/referral", referral);
+app.use("/api/wallet", wallet);
 app.listen(process.env.PORT || 3000, () => {
   console.log("server is up at 3000");
 });

@@ -19,7 +19,14 @@ const couponCodeGeneration = () => {
   return code;
 };
 
+const referralLogics = {
+  coinsReferer: 400,
+  userWithReferral: 200,
+  isValidForSigningUser: true,
+};
+
 module.exports = {
   constants,
   couponCodeGeneration,
+  referralLogics,
 };
