@@ -7,7 +7,6 @@ const constants = {
   AUTHORIZATION_SUCCESS_MESSAGE: "Login successFull..!!",
   PASSWORD_MISMATCH: "Username password does Not macth..!!",
   USER_NOT_EXISTS: "User does not exist..!!",
-
 };
 
 const couponCodeGeneration = () => {
@@ -20,6 +19,12 @@ const couponCodeGeneration = () => {
   return code;
 };
 
+const referralLogics = {
+  coinsReferer: 400,
+  userWithReferral: 200,
+  isValidForSigningUser: true,
+};
+
 
 const authConstants={
   secret_key:"1234567890",
@@ -30,5 +35,6 @@ const authConstants={
 module.exports = {
   constants,
   couponCodeGeneration,
+  referralLogics,
   authConstants
 };

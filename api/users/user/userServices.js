@@ -76,11 +76,14 @@ router.post("/addUsers", async (req, res) => {
     const addCart = await cart.createCart(req.body.userName);
     const productWishlist = await cart.addWishlist(req.body.userName);
     const contactList = await cart.SaveContactDetails(req.body);
+    if (req.body.referenceCode) {
+      await cart.walletLogic(req.body.referenceCode, req.body.userName);
+    }
   } catch (exception) {
     console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: null,
     });
   }

@@ -20,7 +20,7 @@ router.post("/addCart", async (req, res) => {
     console.log(addToCart);
     res.status(200).json({
       status: httpStatus.OK,
-      message: constants.SUCCCESS_MSG,
+      message: constants.constants.SUCCCESS_MSG,
       data: addToCart,
     });
   } catch (exception) {
@@ -50,7 +50,7 @@ router.get("/viewCart", async (req, res) => {
     console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: "topProducts can't be fetched",
       exception: exception,
     });
