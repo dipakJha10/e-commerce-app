@@ -90,7 +90,7 @@ router.post("/signIn", async (req, res) => {
   } catch (exception) {
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       exception: exception,
     });
   }

@@ -12,7 +12,7 @@ router.get("/users", async (req, res) => {
     const allUsers = await userServices.find({});
     res.status(200).json({
       status: httpStatus.OK,
-      message: constants.SUCCCESS_MSG,
+      message: constants.constants.SUCCCESS_MSG,
       data: allUsers,
       count: allUsers.length,
     });
@@ -21,7 +21,7 @@ router.get("/users", async (req, res) => {
     console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: null,
     });
   }
@@ -37,13 +37,13 @@ router.get("/userSearch", async (req, res) => {
     console.log(findUser);
     res.status(200).json({
       status: httpStatus.OK,
-      message: constants.SUCCCESS_MSG,
+      message: constants.constants.SUCCCESS_MSG,
       data: findUser,
     });
   } catch (error) {
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: null,
     });
   }
@@ -70,7 +70,7 @@ router.put("/removeUser", async (req, res) => {
 
     res.status(200).json({
       status: httpStatus.OK,
-      message: "request successfull",
+      message: constants.constants.SUCCCESS_MSG,
       data: result.value,
     });
     let mailObject = emailTemplate.emailObjectCreation(
@@ -82,7 +82,7 @@ router.put("/removeUser", async (req, res) => {
     console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message:constants.constants.FAILURE_MSG,
       data: null,
     });
   }

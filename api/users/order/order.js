@@ -15,7 +15,7 @@ router.post("/productOrder", async (req, res) => {
     const order = await newOrder.save();
     res.status(200).json({
       status: httpStatus.OK,
-      message: constants.SUCCCESS_MSG,
+      message: constants.constants.SUCCCESS_MSG,
       data: order,
     });
 
@@ -32,7 +32,7 @@ router.post("/productOrder", async (req, res) => {
     console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: "order can't be posted",
       exception: exception,
     });
@@ -47,14 +47,14 @@ router.get("/viewOrder", async (req, res) => {
     getOrder = await productOrders.find({ userName: req.query.userName });
     res.status(200).json({
       status: httpStatus.OK,
-      message: constants.SUCCCESS_MSG,
+      message: constants.constants.SUCCCESS_MSG,
       data: getOrder,
       count: getOrder.length,
     });
   } catch (exception) {
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: "order can't viewed",
       exception: exception,
     });
@@ -86,7 +86,7 @@ router.put("/cancelOrder", async (req, res) => {
 
     res.status(200).json({
       status: httpStatus.OK,
-      message: "request successfull",
+      message: constants.constants.SUCCCESS_MSG,
       data: updateCancelOrder,
     });
     //notification code
@@ -104,7 +104,7 @@ router.put("/cancelOrder", async (req, res) => {
     console.log(exception),
       res.status(500).send({
         status: httpStatus.INTERNAL_SERVER_ERROR,
-        message: constants.FAILURE_MSG,
+        message: constants.constants.FAILURE_MSG,
         data: "order can't canceled",
         exception: exception,
       });
@@ -124,14 +124,14 @@ router.get("/orderNumbers", async (req, res) => {
     console.log(result);
     res.status(200).json({
       status: httpStatus.OK,
-      message: "request successfull",
+      message: constants.constants.SUCCCESS_MSG,
       count: result,
     });
   } catch (exception) {
     console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: "number of order can't be fetched",
       exception: exception,
     });
@@ -173,14 +173,14 @@ router.get("/topProducts", async (req, res) => {
     console.log(products);
     res.status(200).json({
       status: httpStatus.OK,
-      message: "request successfull",
+      message: constants.constants.SUCCCESS_MSG,
       data: products,
     });
   } catch (exception) {
     console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: "topProducts can't be fetched",
       exception: exception,
     });
