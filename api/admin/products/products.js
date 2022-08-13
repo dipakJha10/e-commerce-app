@@ -11,13 +11,13 @@ router.post("/addProducts", async (req, res) => {
     const product = await newProducts.save();
     res.status(200).json({
       status: httpStatus.OK,
-      message: constants.SUCCCESS_MSG,
+      message: constants.constants.SUCCCESS_MSG,
       data: productServices,
     });
   } catch {
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: "products can not be added",
     });
   }
@@ -40,13 +40,13 @@ router.put("/updateProducts", async (req, res) => {
     );
     res.status(200).json({
       status: httpStatus.OK,
-      message: "request successfull",
+      message: constants.constants.SUCCCESS_MSG,
       data: result.value,
     });
   } catch (exception) {
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: "request Failed",
+      message: constants.constants.FAILURE_MSG,
       data: null,
     });
   }
@@ -61,20 +61,16 @@ router.delete("/delProduct", async (req, res) => {
     });
     res.status(200).json({
       status: httpStatus.OK,
-      message: "request successfull",
+      message: constants.constants.SUCCCESS_MSG,
       data: null,
     });
   } catch (exception) {
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: "request Failed",
+      message: constants.constants.FAILURE_MSG,
       data: null,
     });
   }
 });
-
-
-
-
 
 module.exports = router;

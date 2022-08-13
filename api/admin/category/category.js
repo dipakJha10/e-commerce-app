@@ -12,13 +12,13 @@ router.post("/newCategories", async (req, res) => {
     const category = await newCategory.save();
     res.status(200).json({
       status: httpStatus.OK,
-      message: constants.SUCCCESS_MSG,
+      message: constants.constants.SUCCCESS_MSG,
       data: category,
     });
   } catch (exception) {
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: null,
     });
   }
@@ -47,7 +47,7 @@ router.get("/allCategories", async (req, res) => {
     }
     res.status(200).json({
       status: httpStatus.OK,
-      message: constants.SUCCCESS_MSG,
+      message: constants.constants.SUCCCESS_MSG,
       data: result,
       count: result.length,
     });
@@ -55,7 +55,7 @@ router.get("/allCategories", async (req, res) => {
     console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: null,
     });
   }
@@ -78,13 +78,13 @@ router.put("/updateCategory", async (req, res) => {
     );
     res.status(200).json({
       status: httpStatus.OK,
-      message: "request successfull",
+      message: constants.constants.SUCCCESS_MSG,
       data: results.value,
     });
   } catch (exception) {
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: "request Failed",
+      message: constants.constants.FAILURE_MSG,
       data: null,
     });
   }
@@ -106,7 +106,7 @@ router.delete("/deleteCategory", async (req, res) => {
     console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: "request Failed",
+      message: constants.constants.FAILURE_MSG,
       data: null,
     });
   }

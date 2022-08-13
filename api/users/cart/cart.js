@@ -27,7 +27,7 @@ router.post("/addCart", async (req, res) => {
     console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: "Products can't be added to cart",
       exception: exception,
     });
@@ -43,7 +43,7 @@ router.get("/viewCart", async (req, res) => {
 
     res.status(200).json({
       status: httpStatus.OK,
-      message: constants.SUCCCESS_MSG,
+      message: constants.constants.SUCCCESS_MSG,
       data: viewCart,
     });
   } catch (exception) {
@@ -95,13 +95,13 @@ router.post("/addProductToCart", async (req, res) => {
     );
     res.status(200).json({
       status: httpStatus.OK,
-      message: constants.SUCCCESS_MSG,
+      message: constants.constants.SUCCCESS_MSG,
     });
   } catch (exception) {
     console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: "Products can't be added to cart",
       exception: exception,
     });
@@ -143,14 +143,14 @@ router.put("/updateCart", async (req, res) => {
     );
     res.status(200).json({
       status: httpStatus.OK,
-      message: constants.SUCCCESS_MSG,
+      message: constants.constants.SUCCCESS_MSG,
       data: findUser,
     });
   } catch (exception) {
     console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: "",
       exception: exception,
     });
@@ -161,14 +161,13 @@ router.put("/updateCart", async (req, res) => {
 router.delete("/delete", async (req, res) => {
   try {
     const user = await cartService.findOne({ userName: req.body.userName });
-    
-      let index = user.cartProduct.findIndex(
-        (product) => product.productId === req.body.productId
-      );
-      if (index >= 0) {
-        user.cartProduct.splice(index, 1);
-      }
-    
+
+    let index = user.cartProduct.findIndex(
+      (product) => product.productId === req.body.productId
+    );
+    if (index >= 0) {
+      user.cartProduct.splice(index, 1);
+    }
 
     // let result = await cartService.findOneAndUpdate(
     //   { userName: req.body.userName },
@@ -181,14 +180,14 @@ router.delete("/delete", async (req, res) => {
     // );
     res.status(200).json({
       status: httpStatus.OK,
-      message: constants.SUCCCESS_MSG,
+      message: constants.constants.SUCCCESS_MSG,
       data: user,
     });
   } catch (exception) {
     console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: "",
       exception: exception,
     });
@@ -200,9 +199,9 @@ router.delete("/delete", async (req, res) => {
 router.delete("/deleteCart", async (req, res) => {
   try {
     const user = await cartService.findOne({ userName: req.body.userName });
-    let product = req.body.productId;   
+    let product = req.body.productId;
     if (product) {
-      user.cartProduct.splice(product,1);
+      user.cartProduct.splice(product, 1);
     }
     let result = await cartService.findOneAndUpdate(
       { userName: req.body.userName },
@@ -215,14 +214,14 @@ router.delete("/deleteCart", async (req, res) => {
     );
     res.status(200).json({
       status: httpStatus.OK,
-      message: constants.SUCCCESS_MSG,
+      message: constants.constants.SUCCCESS_MSG,
       data: user,
     });
   } catch (exception) {
     console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: "",
       exception: exception,
     });

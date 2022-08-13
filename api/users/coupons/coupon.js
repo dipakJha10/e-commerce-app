@@ -19,7 +19,7 @@ router.post("/verifyCode", async (req, res) => {
     }
     res.status(200).json({
       status: httpStatus.OK,
-      message: "code has been matched",
+      message: constants.constants.SUCCCESS_MSG,
       discountPercentage: findCode.discountPercentage,
       isUsed: findCode.isUsed,
     });
@@ -27,7 +27,7 @@ router.post("/verifyCode", async (req, res) => {
     console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: null,
     });
   }
@@ -55,14 +55,14 @@ router.put("/couponApply", async (req, res) => {
     console.log(result);
     res.status(200).json({
       status: httpStatus.OK,
-      message: "Request Success Full!!",
+      message: constants.constants.SUCCCESS_MSG,
       data: result.value,
     });
   } catch (exception) {
     console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: "Request not completed!!",
+      message: constants.constants.FAILURE_MSG,
       data: null,
     });
   }

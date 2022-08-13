@@ -33,13 +33,13 @@ router.get("/users", async (req, res) => {
 
     res.status(200).json({
       status: httpStatus.OK,
-      message: constants.SUCCCESS_MSG,
+      message: constants.constants.SUCCCESS_MSG,
       data: user[0],
     });
   } catch (error) {
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: null,
     });
   }
@@ -60,13 +60,13 @@ router.put("/users", async (req, res) => {
     );
     res.status(200).json({
       status: httpStatus.OK,
-      message: "request successfull",
+      message: constants.constants.SUCCCESS_MSG,
       data: result.value,
     });
   } catch (exception) {
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: "request Failed",
+      message: constants.constants.FAILURE_MSG,
       data: null,
     });
   }
@@ -93,13 +93,13 @@ router.put("/deActivate", async (req, res) => {
     );
     res.status(200).json({
       status: httpStatus.OK,
-      message: "request successfull",
+      message: constants.constants.SUCCCESS_MSG,
       data: result.value,
     });
   } catch (exception) {
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: null,
     });
   }
@@ -117,7 +117,7 @@ router.get("/userSearch", async (req, res) => {
     console.log(user);
     res.status(200).json({
       status: httpStatus.OK,
-      message: constants.SUCCCESS_MSG,
+      message: constants.constants.SUCCCESS_MSG,
       data: user,
     });
   } catch (error) {

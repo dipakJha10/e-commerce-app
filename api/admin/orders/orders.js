@@ -34,14 +34,14 @@ router.get("/viewOrders", async (req, res) => {
     }
     res.status(200).json({
       status: httpStatus.OK,
-      message: constants.SUCCCESS_MSG,
+      message: constants.constants.SUCCCESS_MSG,
       data: userOrders,
       count: userOrders.length,
     });
   } catch (exception) {
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: null,
     });
   }
@@ -72,7 +72,7 @@ router.put("/cancelOrderAdmin", async (req, res) => {
 
     res.status(200).json({
       status: httpStatus.OK,
-      message: "request successfull ! order has been canceled",
+      message: constants.constants.SUCCCESS_MSG,
       data: updateOrderStatus,
     });
 
@@ -92,7 +92,7 @@ router.put("/cancelOrderAdmin", async (req, res) => {
   } catch (exception) {
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: null,
     });
   }
@@ -112,13 +112,13 @@ router.delete("/delOrders", async (req, res) => {
 
     res.status(200).json({
       status: httpStatus.OK,
-      message: "request successfull ! order has been deleted",
+      message: constants.constants.SUCCCESS_MSG,
       data: null,
     });
   } catch (exception) {
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
-      message: constants.FAILURE_MSG,
+      message: constants.constants.FAILURE_MSG,
       data: null,
     });
   }
