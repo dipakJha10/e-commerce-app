@@ -20,6 +20,7 @@
     "nodemailer": "^6.7.5",
     "nodemon": "^2.0.18",
     "randomstring": "^1.2.2",
-    "redis": "^4.2.0"
+    "redis": "^4.2.0",
+    "springedge": "^1.0.6"
   }
 }
