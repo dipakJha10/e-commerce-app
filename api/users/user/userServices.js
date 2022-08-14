@@ -129,7 +129,4 @@ router.get("/userSearch", async (req, res) => {
   }
 });
 
-
-
-
 module.exports = router;
