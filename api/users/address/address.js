@@ -130,4 +130,42 @@ router.delete("/delete", async (req, res) => {
   }
 });
 
+// update address status
+router.put("/update", async (req, res) => {
+  try {
+    const user = await userServices.findOne({
+      userName: req.body.userName,
+    });
+
+    for (let address of user.address) {
+      if (address.addressId === req.body.addressId) {
+        address.default = true;
+      } else {
+        address.default = false;
+      }
+    }
+
+    let result = await userServices.findOneAndUpdate(
+      { userName: req.body.userName },
+      user,
+      {
+        new: true,
+        upsert: true,
+        rawResult: true, // Return the raw result from the MongoDB driver
+      }
+    );
+    res.status(200).json({
+      status: httpStatus.OK,
+      message: constants.constants.SUCCCESS_MSG,
+    });
+  } catch (exception) {
+    console.log(exception);
+    res.status(500).send({
+      status: httpStatus.INTERNAL_SERVER_ERROR,
+      message: constants.constants.FAILURE_MSG,
+      data: null,
+    });
+  }
+});
+
 module.exports = router;
