@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const db = require("./db/db.js");
 const userservices = require("./api/users/user/userServices");
-const userSignUp = require("./api/users/user/signUpSignIn");
+const userSignUp = require("./api/users/user/loginServices");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const adminservices = require("./api/admin/users/userServices");
@@ -18,6 +18,7 @@ const productWishlist = require("./api/users/wishlist/wishlist");
 const referral = require("./api/users/referral/refralCode");
 const wallet = require("./api/users/wallet/wallet");
 const authService = require("./utilities/authServices");
+const address = require("./api/users/address/address");
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -29,7 +30,8 @@ app.get("/", function (req, res) {
   });
 });
 
-app.use("/api/userSignUpSignIn", userSignUp);
+app.use("/api/user", userSignUp);
+
 //added middleware auth
 app.use(authService.verifyToken, function (req, res, next) {
   authService.tokenValidation(req, res, next);
@@ -47,6 +49,7 @@ app.use("/api/cart", cart);
 app.use("/api/wishlist", productWishlist);
 app.use("/api/referral", referral);
 app.use("/api/wallet", wallet);
+app.use("/api/address", address);
 app.listen(process.env.PORT || 3000, () => {
   console.log("server is up at 3000");
 });
