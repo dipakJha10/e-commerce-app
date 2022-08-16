@@ -9,7 +9,9 @@ const cart = require("../../../utilities/userSignUpServices");
 const authDbServices = models.auth;
 const bcrypt = require("bcrypt");
 const authService = require("../../../utilities/authServices");
+var logger = require("../../admin/logs/log");
 
+logger.info("log to file");
 //post api for posting user info in database
 router.post("/signUp", async (req, res) => {
   try {

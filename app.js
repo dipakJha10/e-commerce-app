@@ -31,7 +31,7 @@ app.get("/", function (req, res) {
 });
 
 app.use("/api/user", userSignUp);
-app.use("/api/address", address);
+
 //added middleware auth
 app.use(authService.verifyToken, function (req, res, next) {
   authService.tokenValidation(req, res, next);
@@ -49,6 +49,7 @@ app.use("/api/cart", cart);
 app.use("/api/wishlist", productWishlist);
 app.use("/api/referral", referral);
 app.use("/api/wallet", wallet);
+app.use("/api/address", address);
 app.listen(process.env.PORT || 3000, () => {
   console.log("server is up at 3000");
 });
