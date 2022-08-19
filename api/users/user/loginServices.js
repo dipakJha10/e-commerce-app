@@ -9,9 +9,8 @@ const cart = require("../../../utilities/userSignUpServices");
 const authDbServices = models.auth;
 const bcrypt = require("bcrypt");
 const authService = require("../../../utilities/authServices");
-var logger = require("../../admin/logs/log");
+var logger = require("../../admin/logServices/log");
 
-logger.info("log to file");
 //post api for posting user info in database
 router.post("/signUp", async (req, res) => {
   try {
@@ -28,6 +27,7 @@ router.post("/signUp", async (req, res) => {
     newAuthuser = new authDbServices(newAuthuser);
     const authUser = await newAuthuser.save();
     console.log(".........", authUser);
+    logger.info(".........", authUser);
     let token = await authService.signIn({ username: req.body.userName });
 
     //user AUTH logic ends==========================================
@@ -48,6 +48,7 @@ router.post("/signUp", async (req, res) => {
     }
   } catch (exception) {
     console.log(exception);
+    logger.error(new Date() + " error", exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
       message: constants.constants.FAILURE_MSG,
@@ -90,6 +91,95 @@ router.post("/signIn", async (req, res) => {
       });
     }
   } catch (exception) {
+    res.status(500).send({
+      status: httpStatus.INTERNAL_SERVER_ERROR,
+      message: constants.constants.FAILURE_MSG,
+      exception: exception,
+    });
+  }
+});
+
+// update password
+
+router.put("/updatePassword", async (req, res) => {
+  try {
+    const user = await authDbServices.findOne({
+      userName: req.body.userName,
+    });
+    if (user) {
+      if (await bcrypt.compare(req.body.password, user.password)) {
+        // let user = {
+        //   userName: req.body.userName,
+        //   password:await bcrypt.hash(req.body.newPassword, 10)
+        // }
+
+        req.body.password = await bcrypt.hash(req.body.newPassword, 10);
+        delete req.body.newPassword;
+
+        let result = await authDbServices.findOneAndUpdate(
+          { userName: req.body.userName },
+          req.body,
+          {
+            new: true,
+            upsert: true,
+            rawResult: true, // Return the raw result from the MongoDB driver
+          }
+        );
+        res.status(200).json({
+          status: httpStatus.OK,
+          message: constants.constants.SUCCCESS_MSG,
+          data: "password update successFully!!!",
+        });
+      } else {
+        res.status(200).json({
+          status: httpStatus.OK,
+          message: constants.constants.PASSWORD_MISMATCH,
+          data: null,
+        });
+      }
+    } else {
+      res.status(200).json({
+        status: httpStatus.OK,
+        message: constants.constants.USER_NOT_EXISTS,
+        data: null,
+      });
+    }
+  } catch (exception) {
+    console.log(exception);
+    res.status(500).send({
+      status: httpStatus.INTERNAL_SERVER_ERROR,
+      message: constants.constants.FAILURE_MSG,
+      exception: exception,
+    });
+  }
+});
+
+// update password
+
+router.put("/update", async (req, res) => {
+  try {
+    const user = await authDbServices.findOne({
+      userName: req.body.userName,
+    });
+    const updatedPassword = {
+      userName: req.body.userName,
+      password: req.body.password,
+    };
+    let result = await authDbServices.findOneAndUpdate(
+      { userName: req.body.userName },
+      updatedPassword,
+      {
+        new: true,
+        upsert: true,
+        rawResult: true, // Return the raw result from the MongoDB driver
+      }
+    );
+    res.status(200).json({
+      status: httpStatus.OK,
+      message: constants.constants.SUCCCESS_MSG,
+      data: "password has been updated successFully!!!",
+    });
+  } catch (excepton) {
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
       message: constants.constants.FAILURE_MSG,
