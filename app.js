@@ -6,6 +6,7 @@ const userSignUp = require("./api/users/user/loginServices");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const adminservices = require("./api/admin/users/userServices");
+const uploadServices = require("./api/admin/users/bulkUpload");
 const categories = require("./api/admin/category/category");
 const productservices = require("./api/admin/products/products");
 const userProductServices = require("./api/users/products/products");
@@ -22,6 +23,7 @@ const address = require("./api/users/address/address");
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+global.__basedir = __dirname;
 
 app.get("/", function (req, res) {
   res.send({
@@ -31,6 +33,7 @@ app.get("/", function (req, res) {
 });
 
 app.use("/api/user", userSignUp);
+app.use("/api/upload", uploadServices);
 
 //added middleware auth
 app.use(authService.verifyToken, function (req, res, next) {
