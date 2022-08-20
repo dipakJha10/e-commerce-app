@@ -47,6 +47,16 @@ let emailObjectCreation = (user, notificationType) => {
         Deepak Jha `;
       finalObject.emailTo = user.emailId;
       break;
+
+    case "if forgot password then reset password":
+      finalObject.subject = `Reset your password`;
+      finalObject.text = `Hi ${user.firstName} ${user.lastName}
+      We have sent you this email in response to your request to reset your password.We recommend that you keep your password secure and not share it with anyone.
+
+      Change your password by clicking below link:
+      http://localhost:3000/api/user/update`;
+      finalObject.emailTo = user.emailId;
+      break;
   }
 
   return finalObject;

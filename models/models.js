@@ -40,6 +40,9 @@ const userModel = new mongoose.Schema({
   reasons: {
     type: String,
   },
+  createdAt: {
+    type: Number,
+  },
 });
 
 // products schema

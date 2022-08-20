@@ -13,11 +13,13 @@ router.post("/upload", upload.single("file"), async (req, res) => {
     }
     let path = __basedir + "/uploads/" + req.file.filename;
     fs.readFile(path, handleFile);
+    let obj;
     function handleFile(err, data) {
       if (err) throw err;
       obj = JSON.parse(data);
-      console.log(obj);
+      triggerUserFLow(obj);
     }
+
     res.status(200).json({
       status: httpStatus.OK,
       message: constants.constants.SUCCCESS_MSG,
@@ -32,5 +34,12 @@ router.post("/upload", upload.single("file"), async (req, res) => {
     });
   }
 });
+
+let triggerUserFLow = async (bulkdata) => {
+  let testData = bulkdata[0];
+  console.log(testData);
+};
+
+
 
 module.exports = router;
