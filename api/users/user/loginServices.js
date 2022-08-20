@@ -163,7 +163,7 @@ router.put("/update", async (req, res) => {
     });
     const updatedPassword = {
       userName: req.body.userName,
-      password: req.body.password,
+      password: await bcrypt.hash(req.body.password, 10),
     };
     let result = await authDbServices.findOneAndUpdate(
       { userName: req.body.userName },
@@ -180,6 +180,31 @@ router.put("/update", async (req, res) => {
       data: "password has been updated successFully!!!",
     });
   } catch (excepton) {
+    res.status(500).send({
+      status: httpStatus.INTERNAL_SERVER_ERROR,
+      message: constants.constants.FAILURE_MSG,
+      exception: exception,
+    });
+  }
+});
+
+// forgot password
+
+router.put("/forgotPassword", async (req, res) => {
+  try {
+    const user = await userServices.findOne({ userName: req.body.userName });
+    let mailObject = emailTemplate.emailObjectCreation(
+      user,
+      "if forgot password then reset password"
+    );
+    emailService.sendEmail(mailObject);
+    res.status(200).json({
+      status: httpStatus.OK,
+      message: constants.constants.SUCCCESS_MSG,
+      data: "Reset Password link has been shared!!!",
+    });
+  } catch (exception) {
+    console.log(exception);
     res.status(500).send({
       status: httpStatus.INTERNAL_SERVER_ERROR,
       message: constants.constants.FAILURE_MSG,

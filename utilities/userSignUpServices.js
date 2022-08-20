@@ -42,6 +42,9 @@ let SaveContactDetails = async (obj) => {
   return result;
 };
 
+
+
+
 // wallet logic //
 
 let walletLogic = async (referralCode, userName) => {
